@@ -27,6 +27,7 @@ Get-AppxPackage *xboxapp* | Remove-AppxPackage
 Get-AppxPackage *zunevideo* | Remove-AppxPackage
 Get-AppxPackage *solitairecollection* | Remove-AppxPackage
 Get-AppxPackage *zunemusic* | Remove-AppxPackage
+Get-AppxPackage Microsoft.MixedReality.Portal | Remove-AppxPackage
 
 
 #Restart from WinPE
