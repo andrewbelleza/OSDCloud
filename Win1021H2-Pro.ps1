@@ -18,6 +18,10 @@ Import-Module OSD -Force
 Write-Host  -ForegroundColor Green "Start OSDCloud"
 Start-OSDCloud -OSLanguage en-us -OSBuild "21H2" -OSEdition Pro -ZTI
 
+#For Testing
+#Write-Host  -ForegroundColor Cyan "Start OSD Windows 10 21H2 with Firmware Update"
+#Start-OSDCloud -OSLanguage de-de -OSVersion 'Windows 10' -OSBuild 21H2 -OSEdition Pro -OSlicense Retail -Firmware -ZTI
+
 #Restart from WinPE
 Write-Host  -ForegroundColor Green "Restarting in 10 seconds!"
 Start-Sleep -Seconds 10
