@@ -22,13 +22,13 @@ Start-OSDCloud -OSLanguage en-us -OSBuild "21H2" -OSEdition Pro -ZTI
 #Write-Host  -ForegroundColor Cyan "Start OSD Windows 10 21H2 with Firmware Update"
 #Start-OSDCloud -OSLanguage de-de -OSVersion 'Windows 10' -OSBuild 21H2 -OSEdition Pro -Firmware -ZTI
 
-#Some Bloatware apps removal
+<#Some Bloatware apps removal
 Get-AppxPackage *xboxapp* | Remove-AppxPackage
 Get-AppxPackage *zunevideo* | Remove-AppxPackage
 Get-AppxPackage *solitairecollection* | Remove-AppxPackage
 Get-AppxPackage *zunemusic* | Remove-AppxPackage
 Get-AppxPackage Microsoft.MixedReality.Portal | Remove-AppxPackage
-Get-AppxPackage Microsoft.XboxGamingOverlay | Remove-AppxPackage
+Get-AppxPackage Microsoft.XboxGamingOverlay | Remove-AppxPackage#>
 
 
 #Restart from WinPE
