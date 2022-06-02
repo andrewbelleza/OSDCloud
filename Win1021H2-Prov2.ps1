@@ -30,9 +30,7 @@ Import-Module AutopilotOOBE -Force
 
 $Params = @{
     Title = 'OSDeploy Autopilot Registration'
-    #GroupTag = 'Enterprise'
-    #GroupTagOptions = 'Development','Enterprise'
-    Hidden = 'AddToGroup','AssignedComputerName','AssignedUser','PostAction'
+    Hidden = 'AddToGroup','AssignedComputerName','AssignedUser','PostAction,GroupTag,GroupTagOptions'
     Assign = $true
     Run = 'NetworkingWireless'
     Docs = 'https://autopilotoobe.osdeploy.com/'
