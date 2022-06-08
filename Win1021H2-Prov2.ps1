@@ -19,10 +19,7 @@ if ((Get-MyComputerModel) -match 'Virtual') {
 #   Install and Import OSD Module
 #================================================
 
-Install-PackageProvider -Name NuGet -Force 
-Install-Module -Name PowerShellGet -Force 
-Update-Module -Name PowerShellGet
-Install-Module -Name OSD -Force
+Install-Module -Name OSD -Force -SkipPublisherCheck
 Import-Module -Name OSD -Force
 
 #================================================
