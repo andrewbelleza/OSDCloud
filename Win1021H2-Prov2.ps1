@@ -17,8 +17,14 @@ if ((Get-MyComputerModel) -match 'Virtual') {
 #================================================
 #   PreOS
 #   Install and Import OSD Module
-Install-Module OSD -Force
-Import-Module OSD -Force
+#================================================
+
+Install-PackageProvider -Name NuGet -Force 
+Install-Module -Name PowerShellGet -Force 
+Update-Module -Name PowerShellGet
+Install-Module -Name OSD -Force
+Import-Module -Name OSD -Force
+
 #================================================
 #   [OS] Start-OSDCloud with Params
 #================================================
