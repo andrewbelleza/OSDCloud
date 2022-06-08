@@ -39,7 +39,7 @@ Start-OSDCloud @Params
 #   WinPE PostOS Sample
 #   AutopilotOOBE Offline Staging
 #================================================
-Install-Module AutopilotOOBE -Force
+Install-Module AutopilotOOBE -Force -SkipPublisherCheck
 Import-Module AutopilotOOBE -Force
 
 $Params = @{
