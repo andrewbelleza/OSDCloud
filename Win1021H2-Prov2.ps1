@@ -44,11 +44,9 @@ Import-Module AutopilotOOBE -Force
 
 $Params = @{
     Title = 'Autopilot Registration'
-    Hidden = 'AddToGroup','AssignedComputerName','AssignedUser','PostAction','GroupTagOptions'
+    Hidden = 'AddToGroup','AssignedComputerName','AssignedUser','PostAction','GroupTag','GroupTagOptions'
     Assign = $true
-    PostAction = 'Restart'
     Run = 'PowerShell'
-    Disabled = 'Assign'
 }
 AutopilotOOBE @Params
 #================================================
