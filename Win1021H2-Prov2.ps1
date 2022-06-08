@@ -1,12 +1,22 @@
 #================================================
-#   OSDCloud Task Sequence
-#   Windows 10 21H2 Pro en-us Volume
-#   No Autopilot
+#   OSDCloud Build Sequence
+#   WARNING: Will wipe hard drive without prompt!!
+#   Windows 10 21H2 Pro en-us Retail
+#   Deploys OS
+#   Updates OS
+#   Removes AppX Packages from OS
 #   No Office Deployment Tool
+#   Creates post deployment scripts for Autopilot
+#================================================
+#   PreOS
+#   Set VM Display Resolution
+if ((Get-MyComputerModel) -match 'Virtual') {
+    Write-Host  -ForegroundColor Cyan "Setting Display Resolution to 1600x"
+    Set-DisRes 1600
+}
 #================================================
 #   PreOS
 #   Install and Import OSD Module
-#================================================
 Install-Module OSD -Force
 Import-Module OSD -Force
 #================================================
@@ -16,9 +26,10 @@ $Params = @{
     OSBuild = "21H2"
     OSEdition = "Pro"
     OSLanguage = "en-us"
-    OSLicense = "Volume"
+    OSLicense = "Retail"
     SkipAutopilot = $true
     SkipODT = $true
+    ZTI = $True
 }
 Start-OSDCloud @Params
 #================================================
@@ -29,11 +40,12 @@ Install-Module AutopilotOOBE -Force
 Import-Module AutopilotOOBE -Force
 
 $Params = @{
-    Title = 'OSDeploy Autopilot Registration'
-    Hidden = 'AddToGroup','AssignedComputerName','AssignedUser','PostAction,GroupTag,GroupTagOptions'
+    Title = 'Autopilot Registration'
+    Hidden = 'AddToGroup','AssignedComputerName','AssignedUser','PostAction,GroupTagOptions'
     Assign = $true
-    Run = 'NetworkingWireless'
-    Docs = 'https://autopilotoobe.osdeploy.com/'
+    PostAction = 'Restart'
+    Run = 'PowerShell'
+    Disabled = 'Assign'
 }
 AutopilotOOBE @Params
 #================================================
@@ -67,11 +79,8 @@ start PowerShell -NoL -W Mi
 start "Install-Module OSD" /wait PowerShell -NoL -C Install-Module OSD -Force -Verbose
 
 :: Start-OOBEDeploy
-:: There are multiple example lines. Make sure only one is uncommented
 :: The next line assumes that you have a configuration saved in C:\ProgramData\OSDeploy\OSDeploy.OOBEDeploy.json
 start "Start-OOBEDeploy" PowerShell -NoL -C Start-OOBEDeploy
-:: The next line assumes that you do not have a configuration saved in or want to ensure that these are applied
-REM start "Start-OOBEDeploy" PowerShell -NoL -C Start-OOBEDeploy -AddNetFX3 -UpdateDrivers -UpdateWindows
 
 exit
 '@
@@ -96,19 +105,18 @@ start PowerShell -NoL -W Mi
 start "Install-Module AutopilotOOBE" /wait PowerShell -NoL -C Install-Module AutopilotOOBE -Force -Verbose
 
 :: Start-AutopilotOOBE
-:: There are multiple example lines. Make sure only one is uncommented
 :: The next line assumes that you have a configuration saved in C:\ProgramData\OSDeploy\OSDeploy.AutopilotOOBE.json
 start "Start-AutopilotOOBE" PowerShell -NoL -C Start-AutopilotOOBE
-:: The next line is how you would apply a CustomProfile
-REM start "Start-AutopilotOOBE" PowerShell -NoL -C Start-AutopilotOOBE -CustomProfile OSDeploy
-:: The next line is how you would configure everything from the command line
-REM start "Start-AutopilotOOBE" PowerShell -NoL -C Start-AutopilotOOBE -Title 'OSDeploy Autopilot Registration' -GroupTag Enterprise -GroupTagOptions Development,Enterprise -Assign
 
 exit
 '@
 $SetCommand | Out-File -FilePath "C:\Windows\Autopilot.cmd" -Encoding ascii -Force
+
 #================================================
 #   PostOS
-#   Restart-Computer
+#   Shutdown-Computer & Display Message
 #================================================
-Restart-Computer
+Write-Host -Foregroundcolor Red "IMPORTANT! - " -Nonewline
+Read-Host "Ensure to run the OOBEDeploy.cmd to complete the Autopilot readiness build, device will now shutdown
+,remember to update the boot order to HDD before proceeding with phase 2, press the ENTER key to continue...."
+Wpeutil Shutdown
