@@ -17,9 +17,13 @@ Import-Module OSD -Force
 #=======================================================================
 $Params = @{
     OSBuild = "21H2"
-    OSEdition = "Retail"
+    OSEdition = "Pro"
     OSLanguage = "en-us"
+    OSLicense = "Retail"
+    SkipAutopilot = $true
+    SkipODT = $true
     ZTI = $true
+
 }
 Start-OSDCloud @Params
 
