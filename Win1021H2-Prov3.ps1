@@ -16,8 +16,8 @@ Import-Module OSD -Force
 #   [OS] Params and Start-OSDCloud
 #=======================================================================
 $Params = @{
-    OSBuild = "20H2"
-    OSEdition = "Enterprise"
+    OSBuild = "21H2"
+    OSEdition = "Retail"
     OSLanguage = "en-us"
     ZTI = $true
 }
