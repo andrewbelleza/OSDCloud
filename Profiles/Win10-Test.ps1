@@ -128,6 +128,6 @@ $SetupCompleteCMD | Out-File -FilePath 'C:\Windows\Setup\Scripts\SetupComplete.c
 #=======================================================================
 #   Restart-Computer
 #=======================================================================
-Write-Host  -ForegroundColor Green "Restarting in 20 seconds!"
-Start-Sleep -Seconds 20
+Write-Host -Foregroundcolor Green "*****  REMOVE THE USB DRIVE NOW *****"
+Read-Host "The next step is to reboot the machine, then press Shift + F10 to open a command prompt. Type in OOBEAutopilot.cmd, then hit enter and wait to complete the autopilot and updates build, press the ENTER key to continue...."
 wpeutil reboot
