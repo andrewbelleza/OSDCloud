@@ -19,8 +19,11 @@ $Params = @{
     OSBuild = "21H2"
     OSEdition = "Pro"
     OSLanguage = "en-us"
+    OSLicense = "Retail"
     ZTI = $true
     Firmware = $true
+    SkipAutopilot = $true
+    SkipODT = $true
 }
 Start-OSDCloud @Params
 
@@ -34,22 +37,13 @@ $OOBEDeployJson = @'
                       "IsPresent":  false
                   },
     "RemoveAppx":  [
-                       "Microsoft.549981C3F5F10",
-                        "Microsoft.BingWeather",
-                        "Microsoft.GetHelp",
-                        "Microsoft.Getstarted",
-                        "Microsoft.Microsoft3DViewer",
                         "Microsoft.MicrosoftOfficeHub",
                         "Microsoft.MicrosoftSolitaireCollection",
                         "Microsoft.MixedReality.Portal",
-                        "Microsoft.Office.OneNote",
                         "Microsoft.People",
                         "Microsoft.SkypeApp",
                         "Microsoft.Wallet",
-                        "Microsoft.WindowsCamera",
                         "microsoft.windowscommunicationsapps",
-                        "Microsoft.WindowsFeedbackHub",
-                        "Microsoft.WindowsMaps",
                         "Microsoft.Xbox.TCUI",
                         "Microsoft.XboxApp",
                         "Microsoft.XboxGameOverlay",
@@ -92,8 +86,8 @@ $AutopilotOOBEJson = @'
                ],
     "PostAction":  "Quit",
     "Run":  "NetworkingWireless",
-    "Docs":  "https://google.com/",
-    "Title":  "Autopilot Register"
+    "Docs":  "https://docs.microsoft.com/en-us/mem/autopilot/troubleshooting",
+    "Title":  "RCIT Autopilot Register"
 }
 '@
 If (!(Test-Path "C:\ProgramData\OSDeploy")) {
@@ -104,18 +98,18 @@ $AutopilotOOBEJson | Out-File -FilePath "C:\ProgramData\OSDeploy\OSDeploy.Autopi
 #================================================
 #  [PostOS] AutopilotOOBE CMD Command Line
 #================================================
-Write-Host -ForegroundColor Green "Create C:\Windows\System32\Autopilot.cmd"
-$AutopilotCMD = @'
+Write-Host -ForegroundColor Green "Create C:\Windows\System32\OOBEAutopilot.cmd"
+$OOBEAutopilotCMD = @'
 PowerShell -NoL -Com Set-ExecutionPolicy RemoteSigned -Force
 Set Path = %PATH%;C:\Program Files\WindowsPowerShell\Scripts
 Start /Wait PowerShell -NoL -C Install-Module AutopilotOOBE -Force -Verbose
 Start /Wait PowerShell -NoL -C Install-Module OSD -Force -Verbose
-Start /Wait PowerShell -NoL -C Invoke-WebPSScript https://raw.githubusercontent.com/DIGIT-BS/OSDCloud/main/Install-EmbeddedProductKey.ps1
+Start /Wait PowerShell -NoL -C Invoke-WebPSScript https://raw.githubusercontent.com/andrewbelleza/OSDCloud/main/Scripts/Install-EmbeddedProductKey.ps1
 Start /Wait PowerShell -NoL -C Start-AutopilotOOBE
 Start /Wait PowerShell -NoL -C Start-OOBEDeploy
 Start /Wait PowerShell -NoL -C Restart-Computer -Force
 '@
-$AutopilotCMD | Out-File -FilePath 'C:\Windows\System32\Autopilot.cmd' -Encoding ascii -Force
+$OOBEAutopilotCMD | Out-File -FilePath 'C:\Windows\System32\OOBEAutopilot.cmd' -Encoding ascii -Force
 
 #================================================
 #  [PostOS] SetupComplete CMD Command Line
