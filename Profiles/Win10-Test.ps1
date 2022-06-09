@@ -16,7 +16,7 @@ Import-Module OSD -Force
 #   [OS] Params and Start-OSDCloud
 #=======================================================================
 $Params = @{
-    OSBuild = "21H1"
+    OSBuild = "21H2"
     OSEdition = "Pro"
     OSLanguage = "en-us"
     OSLicense = "Retail"
@@ -87,7 +87,7 @@ $AutopilotOOBEJson = @'
     "PostAction":  "Quit",
     "Run":  "NetworkingWireless",
     "Docs":  "https://docs.microsoft.com/en-us/mem/autopilot/troubleshooting",
-    "Title":  "RCIT Autopilot Register"
+    "Title":  "RCIT Autopilot Registration"
 }
 '@
 If (!(Test-Path "C:\ProgramData\OSDeploy")) {
